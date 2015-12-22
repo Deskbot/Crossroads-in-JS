@@ -27,7 +27,6 @@ function Controller() {
 		ropeOnTree:false,
 		gotKey:false,
 		deadBear:false,
-		seenPath:false, 
 		ropeIsDown:false,
 		gotRope:false,
 		doorOpen:false,

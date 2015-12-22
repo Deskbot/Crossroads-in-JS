@@ -732,16 +732,19 @@ StatueRoom.walk_down = function() {
 //class Turret
 function Turret() {}
 Turret.img = 'Turret';
+Turret.firstVisit = true;
 Turret.go = function() {
 	game.output([
 		"You began walking up the spiral stairs to the right.",
 		"It continued on for what seemed like an eternity every brick in the wall identical, every stone step the same.",
-		"Eventually you reached the top."
+		"Eventually you reached the top.",
+		"You find yourself at the top of a turret."
 	]);
 	
-	if (!game.flags.seenPath) {
+	if (Turret.firstVisit) {
+		Turret.firstVisit = false;
+		
 		game.output([
-			"You find yourself at the top of a turret.",
 			"You look down.",
 			"You can see the forest and the river from before and you can see the sea far off in the distance.",
 			"You turn around to look back at the path from which you originally came.",
@@ -752,8 +755,6 @@ Turret.go = function() {
 			"It trumps the height of even this castle.",
 			"It even seems as if the top of the wall itself touches the blue sky above."
 		]);
-		
-		game.set_flag('seenPath');
 	}
 	
 	if (!game.flags.ropeIsDown) {
