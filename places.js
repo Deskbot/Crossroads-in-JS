@@ -352,7 +352,7 @@ ForestCentre.go = function() {
 		
 		game.output([
 			"There appears to be something on the ground by its feet.",
-			"It's glints slightly from the sunlight in the distance.",
+			"It glints slightly from the sunlight in the distance.",
 			"The path seems to continue right through the forest to the other side.",
 			"But there's no way past while the bear is there..."
 		]);
@@ -379,6 +379,9 @@ ForestCentre.use_item = function(item) {
 		]);
 		
 		game.bag.remove_item(item);
+		
+		ForestCentre.img = 'ForestCentre_fish';
+		game.change_background(ForestCentre.img);
 		
 		game.bag.add_item(new Item('Odd Key'));
 		
