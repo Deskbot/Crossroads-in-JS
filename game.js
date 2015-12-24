@@ -7,11 +7,13 @@ function init() {
 	itemsPanelElem = $('#items-panel');
 	
 	restartButtonElem = $('#restart');
-	restartButtonElem.click(restart);
-	
+	restartButtonElem.click(restart);	
+
 	game = new Controller();
 	game.clear_output();
 	game.go(Globe);
+
+	$('#output-wrapper').draggable().resizable();
 }
 
 function restart() {
@@ -51,18 +53,18 @@ Controller.prototype.go = function(place, revisit) {
 	this.change_background(place.img);
 	
 	place.go.call(place, revisit);
-}
+};
 Controller.prototype.goFunction = function(place, revisit) {
 	return function() {
 		this.go(place, revisit);
 	}.bind(this);
-}
+};
 Controller.prototype.change_background = function(name) {
 	gameElem.css('background-image','url("media/backgrounds/' + name + '.png")');
-}
+};
 Controller.prototype.remove_background = function() {
-	gameElem.css('background-image', 'none');
-}
+	gameElem.css('background-image','none');
+};
 Controller.prototype.output = function(messages) {
 	for (var i=0; i < messages.length; i++) {
 		if (messages[i] === '<hr>') {
@@ -73,8 +75,8 @@ Controller.prototype.output = function(messages) {
 	}
 	
 	//scroll to bottom of outputElem
-	outputElem.scrollTop(outputElem.prop("scrollHeight"));
-}
+	outputElem.scrollTop(outputElem.prop('scrollHeight'));
+};
 Controller.prototype.set_flag = function(name) {
 	if (typeof this.flags[name] !== 'undefined') {
 		this.flags[name] = true;
@@ -95,7 +97,8 @@ Controller.prototype.new_option = function(text, handler) {
 	$(optionsPanelElem.children('button')[numOfButtons-1]).click(handler);
 }
 Controller.prototype.clear_output = function() {
-	outputElem.html('');
+	outputElem.empty();
+	//outputElem.children(':not(.ui-resizable-handle)').remove();
 }
 Controller.prototype.use_item = function(item) {
 	if (typeof this.currentLocation.use_item === 'function') {
@@ -135,7 +138,7 @@ Bag.prototype.remove_item = function(item) {
 	this.itemList.removeByKey(itemPos);
 	
 	this.update_item_panel();
-}
+};
 Bag.prototype.update_item_panel = function() {
 	itemsPanelElem.html('');
 	
