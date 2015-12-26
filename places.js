@@ -325,16 +325,27 @@ Clearing.go = function() {
 	if (!game.flags.sharpStick) {
 		game.output([
 			"Lying near the centre of the clearing is a long stick about half your height.",
-			"It has the same thickness as a spear with a thin sharp pointed end.",
-			"You decided to take the stick with you."
+			"It has the same thickness as a spear with a thin sharp pointed end."
 		]);
 		
-		game.set_flag('sharpStick');
-		
-		game.bag.add_item(new Item('Sharp Stick'));
-		
-		Clearing.img = 'Clearing_no_stick';
-	}
+		game.give_options([
+			{text: "Take the stick",	handler: Clearing.take_stick},
+			{text: "Go back...",		handler: game.goFunction(Forest)}
+		]);
+	} else {
+		game.give_options([
+			{text: "Go back...", handler: game.goFunction(Forest)}
+		]);
+	}	
+}
+Clearing.take_stick = function() {
+	game.set_flag('sharpStick');
+
+	game.bag.add_item(new Item('Sharp Stick'));
+	
+	Clearing.img = 'Clearing_no_stick';
+	
+	game.change_background(Clearing.img);
 	
 	game.give_options([
 		{text: "Go back...", handler: game.goFunction(Forest)}
@@ -421,28 +432,10 @@ ForestEnd.img = 'ForestEnd';
 ForestEnd.go = function() {
 	if (game.flags.ropeOnTree) {
 		game.output([
-			"You continue running and see the strange looking tree from before, with the Harpoon Rope hanging down.",
-			"You take this opportunity and jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
-			"",
-			"You sail through the air, your legs holding on tightly.",
-			"You swing through the air but suddenly the branch begins to give way.",
-			"Before you know it you're moving helplessly through the air.",
-			"",
-			"You hit the ground...",
-			"",
-			"But you survive.",
-			"",
-			"You landed on a soft sandy surface, however you're still in some pain.",
-			"Suddenly you remember the bear and turn around.",
-			"",
-			"You see it lying on the ground at the base of the cliff.",
-			"Its head has been crushed by the trunk of the oddly shaped tree.",
-			"It lies there motionless."
+			"You continue running and see the strange looking tree from before, with the Harpoon Rope hanging down."
 		]);
 		
-		game.set_flag('deadBear');
-		
-		game.go(TreeBase, false);
+		game.give_options([{text: "Jump", handler: ForestEnd.jump_successfully}]);
 		
 	} else {
 		game.output([
@@ -459,7 +452,30 @@ ForestEnd.go = function() {
 		]);
 	}
 }
-
+ForestEnd.jump_successfully = function() {
+	game.output([
+		"You take this opportunity to jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
+		"",
+		"You sail through the air, your legs holding on tightly.",
+		"You swing through the air but suddenly the branch begins to give way.",
+		"Before you know it you're moving helplessly through the air.",
+		"",
+		"You hit the ground...",
+		"",
+		"But you survive.",
+		"",
+		"You landed on a soft sandy surface, however you're still in some pain.",
+		"Suddenly you remember the bear and turn around.",
+		"",
+		"You see it lying on the ground at the base of the cliff.",
+		"Its head has been crushed by the trunk of the oddly shaped tree.",
+		"It lies there motionless."
+	]);
+	
+	game.set_flag('deadBear');
+	
+	game.go(TreeBase, false);
+}
 
 //class ForestEdge
 function ForestEdge(talk) {}
