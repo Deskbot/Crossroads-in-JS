@@ -116,7 +116,7 @@ Seashore.using_bowl = function(stage) {
 		]);
 		
 	} else if (stage == 1) {
-		game.bag.remove_item('Harpoon Rope');
+		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
 		
 		game.change_background('Ocean');
 		
@@ -232,7 +232,7 @@ TreeBase.go = function(talk) {
 TreeBase.use_item = function(item) {
 	var itemName = item.get_name();
 	
-	if (game.flags.deadBear && itemName == 'Giant Crown') {
+	/*if (game.flags.deadBear && itemName == 'Giant Crown') {
 		if (!game.flags.trunkOffBear) {
 			game.output(["You pull as forcefully as you can to slide the trunk of the tree off the head of the bear."]);
 			game.set_flag('trunkOffBear');
@@ -251,7 +251,11 @@ TreeBase.use_item = function(item) {
 			
 			game.kill_player();
 		}
-	} else if (!game.flags.ropeOnTree && itemName == 'Harpoon Rope') {
+	} else */if (!game.flags.ropeOnTree && itemName == 'Harpoon Rope') {
+		ForestEnd.img = 'ForestEnd_rope';
+		TreeBase.img = 'TreeBase_rope';
+		game.change_background(TreeBase.img);
+		
 		game.set_flag('ropeOnTree');
 		
 		game.output([
@@ -259,7 +263,7 @@ TreeBase.use_item = function(item) {
 			"The rope became taught and held on tightly."
 		]);
 		
-		game.bag.remove_item('Harpoon Rope');
+		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
 		
 		game.go(TreeBase, false);
 	
@@ -392,45 +396,10 @@ ForestCentre.use_item = function(item) {
 			"The bear, already having finished it's first meal, is making it's way towards you quickly on all fours."
 		]);
 		
-		if (game.flags.ropeOnTree) {
-			game.output([
-				"You continue running and see the strange looking tree from before, with the Harpoon Rope hanging down.",
-				"You take this opportunity and jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
-				"",
-				"You sail through the air, your legs holding on tightly.",
-				"You swing through the air but suddenly the branch begins to give way.",
-				"Before you know it you're moving helplessly through the air.",
-				"",
-				"You hit the ground...",
-				"",
-				"But you survive.",
-				"",
-				"You landed on a soft sandy surface, however you're still in some pain.",
-				"Suddenly you remember the bear and turn around.",
-				"",
-				"You see it lying on the ground at the base of the cliff.",
-				"Its head has been crushed by the trunk of the oddly shaped tree.",
-				"It lies there motionless."
-			]);
-			
-			game.set_flag('deadBear');
-			
-			game.go(TreeBase, false);
-			
-		} else {
-			game.output([
-				"You continue running and see a strange looking tree at the end of the path.",
-				"It's oddly growing sideways, but it's far too high for you to grab on to.",
-				"",
-				"You reach the end of the cliff and stop to look down.",
-				"It's a long way. If you jump, you'll certainly hurt yourself, but if you don't the bear will probably kill you."
-			]);
-			
-			game.give_options([
-				{text: "Jump off the cliff",	handler: ForestCentre.get_killed_by_bear},
-				{text: "Go back past the bear",	handler: ForestCentre.get_killed_by_bear}
-			]);
-		}
+		game.give_options([
+			{text: "next...", handler: game.goFunction(ForestEnd)}
+		]);
+		
 	} else {
 		game.output(["It didn't do anything"]);
 	}
@@ -445,6 +414,52 @@ ForestCentre.get_killed_by_bear = function() {
 	
 	game.kill_player();
 }
+
+//class ForestEnd
+function ForestEnd() {}
+ForestEnd.img = 'ForestEnd';
+ForestEnd.go = function() {
+	if (game.flags.ropeOnTree) {
+		game.output([
+			"You continue running and see the strange looking tree from before, with the Harpoon Rope hanging down.",
+			"You take this opportunity and jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
+			"",
+			"You sail through the air, your legs holding on tightly.",
+			"You swing through the air but suddenly the branch begins to give way.",
+			"Before you know it you're moving helplessly through the air.",
+			"",
+			"You hit the ground...",
+			"",
+			"But you survive.",
+			"",
+			"You landed on a soft sandy surface, however you're still in some pain.",
+			"Suddenly you remember the bear and turn around.",
+			"",
+			"You see it lying on the ground at the base of the cliff.",
+			"Its head has been crushed by the trunk of the oddly shaped tree.",
+			"It lies there motionless."
+		]);
+		
+		game.set_flag('deadBear');
+		
+		game.go(TreeBase, false);
+		
+	} else {
+		game.output([
+			"You continue running and see a strange looking tree at the end of the path.",
+			"It's oddly growing sideways, but it's far too high for you to grab on to.",
+			"",
+			"You reach the end of the cliff and stop to look down.",
+			"It's a long way. If you jump, you'll certainly hurt yourself, but if you don't the bear will probably kill you."
+		]);
+		
+		game.give_options([
+			{text: "Jump off the cliff",	handler: ForestCentre.get_killed_by_bear},
+			{text: "Go back past the bear",	handler: ForestCentre.get_killed_by_bear}
+		]);
+	}
+}
+
 
 //class ForestEdge
 function ForestEdge(talk) {}
@@ -566,7 +581,7 @@ LockedDoor.go = function() {
 LockedDoor.use_item = function(item) {
 	if (!game.flags.doorOpen && item.get_name() === 'Odd Key') {
 		game.set_flag('doorOpen');
-		game.bag.remove_item('Odd Key');
+		game.bag.remove_item(game.bag.get_item('Odd Key'));
 		
 		game.output([
 			"You placed the Odd Key into the lock.",
