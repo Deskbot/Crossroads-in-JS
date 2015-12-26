@@ -122,8 +122,6 @@ Controller.prototype.win = function() {
 
 //class Bag
 function Bag() {}
-
-//static
 Bag.prototype.itemList = [];
 
 Bag.prototype.add_item = function(item) {
@@ -139,8 +137,17 @@ Bag.prototype.remove_item = function(item) {
 	
 	this.update_item_panel();
 };
+Bag.prototype.get_item = function(name) {
+	for (var i=0; i < this.itemList.length; i++) {
+		if (this.itemList[i].name == name) {
+			return this.itemList[i];
+		}
+	}
+	
+	return null;
+};
 Bag.prototype.update_item_panel = function() {
-	itemsPanelElem.html('');
+	itemsPanelElem.empty();
 	
 	for (var i=0; i < this.itemList.length; i++) {
 		itemsPanelElem.append('<button>' + this.itemList[i].get_name() + '</button>');
