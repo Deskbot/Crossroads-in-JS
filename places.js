@@ -116,7 +116,7 @@ Seashore.using_bowl = function(stage) {
 		]);
 		
 	} else if (stage == 1) {
-		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
+		game.bag.remove_item(game.bag.get_item('Rope'));
 		
 		game.change_background('Ocean');
 		
@@ -251,7 +251,7 @@ TreeBase.use_item = function(item) {
 			
 			game.kill_player();
 		}
-	} else */if (!game.flags.ropeOnTree && itemName == 'Harpoon Rope') {
+	} else */if (!game.flags.ropeOnTree && itemName == 'Rope') {
 		ForestEnd.img = 'ForestEnd_rope';
 		TreeBase.img = 'TreeBase_rope';
 		game.change_background(TreeBase.img);
@@ -263,7 +263,7 @@ TreeBase.use_item = function(item) {
 			"The rope became taught and held on tightly."
 		]);
 		
-		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
+		game.bag.remove_item(game.bag.get_item('Rope'));
 		
 		game.go(TreeBase, false);
 	
@@ -273,7 +273,7 @@ TreeBase.use_item = function(item) {
 }
 TreeBase.climb_rope = function() {
 	game.output([
-		"You place both hands firmly around the Harpoon Rope and begin to pull yourself up.",
+		"You place both hands firmly around the Rope and begin to pull yourself up.",
 		"Your feet leave the ground, and you look ready to move your hands higher.",
 		"",
 		"*creak*",
@@ -295,23 +295,68 @@ Forest.firstVisit = true;
 Forest.go = function() {
 	if (Forest.firstVisit) {
 		game.output([
-			"You have arrived at the forest.",
-			"You are at yet another crossroads."
+			"You have arrived at the forest."
 		]);
 		Forest.firstVisit = false;
 	}
 	
+	if (!game.flags.gotKey) {
+		game.output([
+			"In the distance you spot a bear.",
+			"There appears to be something on the ground by its feet.",
+			"It glints slightly from the sunlight in the distance.",
+			"The path ahead seems to continue right through to the other side of the forest.",
+			"But there's no way past while the bear is there..."
+		]);
+	} else {
+		game.output([
+			"The bear is gone."
+		]);
+	}
+	
 	game.output([
-		"The forest is so dense that you can't see what is down any of the paths.",
-		"In which direction will you go?"
+		"The forest is so dense that you can't see what is down any of the other paths."
 	]);
 	
 	game.give_options([
 		{text: "Towards the left",	handler: game.goFunction(Clearing)},
-		{text: "Straight on",		handler: game.goFunction(ForestCentre)},
 		{text: "Towards the right",	handler: game.goFunction(ForestEdge)},
 		{text: "Go back...",		handler: game.goFunction(Globe)}
 	]);
+}
+Forest.use_item = function(item) {
+	if (!game.flags.gotKey && item.get_name() === 'Fish On A Stick') {
+		game.output([
+			"You put the end of the stick into the ground and hide behind a tree.",
+			"The bear begins to smell the fresh fish and walks towards it slowly.",
+			"",
+			"It begins chewing on the fish.",
+			"In that moment while it's distracted, you run past it fast as you can.",
+			"",
+			"You slow down momentarily to pick up the shiny object."
+		]);
+		
+		game.bag.remove_item(item);
+		
+		Forest.img = 'Forest_fish';
+		game.change_background(Forest.img);
+		
+		game.bag.add_item(new Item('Odd Key'));
+		
+		game.set_flag('gotKey');
+		
+		game.output([
+			"You look back round at the bear as you start to speed up again.",
+			"The bear, already having finished it's first meal, is making it's way towards you quickly on all fours."
+		]);
+		
+		game.give_options([
+			{text: "Run!", handler: game.goFunction(ForestEnd)}
+		]);
+		
+	} else {
+		game.output(["It didn't do anything"]);
+	}
 };
 
 //class Clearing
@@ -352,87 +397,13 @@ Clearing.take_stick = function() {
 	]);
 }
 
-//class ForestCentre
-function ForestCentre() {}
-ForestCentre.img = 'ForestCentre';
-ForestCentre.firstVisit = true;
-ForestCentre.go = function() {
-	if (!game.flags.gotKey) {
-		if (ForestCentre.firstVisit) {
-			game.output(["You begin to walk forwards but then suddenly in the distance you spot a bear."]);
-			ForestCentre.firstVisit = false;
-		} else {
-			game.output(["You begin to walk forwards but then suddenly you remember the bear up ahead."]);
-		}
-		
-		game.output([
-			"There appears to be something on the ground by its feet.",
-			"It glints slightly from the sunlight in the distance.",
-			"The path seems to continue right through the forest to the other side.",
-			"But there's no way past while the bear is there..."
-		]);
-	} else {
-		game.output([
-			"The bear is gone and there's nothing else here."
-		]);
-	}
-	
-	game.give_options([
-		{text: 'Go back...', handler: game.goFunction(Forest)}
-	]);
-}
-ForestCentre.use_item = function(item) {
-	if (!game.flags.gotKey && item.get_name() === 'Fish On A Stick') {
-		game.output([
-			"You put the end of the stick into the ground and hide behind a tree.",
-			"The bear begins to smell the fresh fish and walks towards it slowly.",
-			"",
-			"It begins chewing on the fish.",
-			"In that moment while it's distracted, you run past it fast as you can.",
-			"",
-			"You slow down momentarily to pick up the shiny object."
-		]);
-		
-		game.bag.remove_item(item);
-		
-		ForestCentre.img = 'ForestCentre_fish';
-		game.change_background(ForestCentre.img);
-		
-		game.bag.add_item(new Item('Odd Key'));
-		
-		game.set_flag('gotKey');
-		
-		game.output([
-			"You look back round at the bear as you start to speed up again.",
-			"The bear, already having finished it's first meal, is making it's way towards you quickly on all fours."
-		]);
-		
-		game.give_options([
-			{text: "next...", handler: game.goFunction(ForestEnd)}
-		]);
-		
-	} else {
-		game.output(["It didn't do anything"]);
-	}
-}
-ForestCentre.get_killed_by_bear = function() {
-	game.output([
-		"In that moment of hesitation, the bear struck, its teeth crushing hard into your shoulder.",
-		"It swings you onto the floor.",
-		"Your head hits forcefully against the ground.",
-		"Quickly everything went black, as the snarling of the bear grew louder."
-	]);
-	
-	game.kill_player();
-}
-
 //class ForestEnd
 function ForestEnd() {}
 ForestEnd.img = 'ForestEnd';
 ForestEnd.go = function() {
 	if (game.flags.ropeOnTree) {
 		game.output([
-			"You continue running and see the strange looking tree from before, with the Harpoon Rope hanging down."
+			"You continue running and see the strange looking tree from before, with the Rope hanging down."
 		]);
 		
 		game.give_options([{text: "Jump", handler: ForestEnd.jump_successfully}]);
@@ -447,8 +418,8 @@ ForestEnd.go = function() {
 		]);
 		
 		game.give_options([
-			{text: "Jump off the cliff",	handler: ForestCentre.get_killed_by_bear},
-			{text: "Go back past the bear",	handler: ForestCentre.get_killed_by_bear}
+			{text: "Jump off the cliff",	handler: ForestEnd.get_killed_by_bear},
+			{text: "Go back past the bear",	handler: ForestEnd.get_killed_by_bear}
 		]);
 	}
 }
@@ -456,8 +427,7 @@ ForestEnd.jump_successfully = function() {
 	game.output([
 		"You take this opportunity to jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
 		"",
-		"You sail through the air, your legs holding on tightly.",
-		"You swing through the air but suddenly the branch begins to give way.",
+		"You swing through the air, your legs holding on tightly, but suddenly the branch begins to give way.",
 		"Before you know it you're moving helplessly through the air.",
 		"",
 		"You hit the ground...",
@@ -475,7 +445,17 @@ ForestEnd.jump_successfully = function() {
 	game.set_flag('deadBear');
 	
 	game.go(TreeBase, false);
-}
+};
+ForestEnd.get_killed_by_bear = function() {
+	game.output([
+		"In that moment of hesitation, the bear struck, its teeth crushing hard into your shoulder.",
+		"It swings you onto the floor.",
+		"Your head hits forcefully against the ground.",
+		"Quickly everything went black, as the snarling of the bear grew louder."
+	]);
+	
+	game.kill_player();
+};
 
 //class ForestEdge
 function ForestEdge(talk) {}
@@ -503,22 +483,20 @@ ForestEdge.go = function() {
 	} else if (!game.flags.gotRope) {
 		game.output([
 			"You find a long rope lying on the ground with a several hooks protruding from one end.",
-			"The other end is tied to a tree.",
-			"You undid the knot, and decided to take the rope with you."
+			"The other end is tied to a tree."
 		]);
 		
-		game.bag.add_item(new Item('Harpoon Rope'));
-		
-		game.set_flag('gotRope');
-		
-		game.go(ForestEdge, false);
+		game.give_options([
+			{text: "Take the rope",	handler: ForestEdge.take_rope},
+			{text: "Go back...",	handler: game.goFunction(Forest)}
+		]);
 		
 	} else {
 		game.give_options([
 			{text: "Go back...", handler: game.goFunction(Forest)}
 		]);
 	}
-}
+};
 ForestEdge.climb_rope = function() {
 	game.output([
 		"You placed both hands around the rope and begin to pull yourself up.",
@@ -531,12 +509,19 @@ ForestEdge.climb_rope = function() {
 	]);
 	
 	game.kill_player();
-}
+};
 ForestEdge.pull_rope = function() {
 	game.output([
 		"You tugged at the rope to try to get it to move, however the rope is held on tightly enough that you can't pull it down."
 	]);
-}
+};
+ForestEdge.take_rope = function() {
+	game.bag.add_item(new Item('Rope'));
+	ForestEdge.img = 'ForestEdge_rope_taken';
+	game.change_background(ForestEdge.img);
+	game.set_flag('gotRope');
+	game.go(ForestEdge, false);
+};
 
 //class Castle
 function Castle() {}
@@ -567,7 +552,7 @@ Castle.go = function() {
 		{text: "Staircase to the right",	handler: game.goFunction(Turret)},
 		{text: "Go back...",				handler: game.goFunction(Globe)}
 	]);
-}
+};
 
 //class LockedDoor
 function LockedDoor() {}
@@ -610,7 +595,7 @@ LockedDoor.use_item = function(item) {
 	} else {
 		game.output(["It didn't do anything"]);
 	}
-}
+};
 
 //class ScalesRoom
 function ScalesRoom() {}
@@ -620,7 +605,7 @@ ScalesRoom.go = function(talk) {
 		game.output([
 			"You opened the door.",
 			"You walk through into a very large room, with a large pit in the centre of the floor.",
-			"In the centre is a pillar with a giant set of golden scales.",
+			"In the centre is a pillar with a giant set of golden scales."
 		]);
 	}
 	
@@ -642,10 +627,10 @@ ScalesRoom.go = function(talk) {
 		game.output(["The pans are empty."]);
 		
 		game.give_options([
-			{text: "Go back...",	handler: game.goFunction(Castle)}
+			{text: "Go back...", handler: game.goFunction(Castle)}
 		]);
 	}
-}
+};
 ScalesRoom.take_bowl = function() {
 	game.bag.add_item(new Item('Giant Bowl'));
 	game.set_flag('scalesDropped');
@@ -657,7 +642,7 @@ ScalesRoom.take_bowl = function() {
 	ScalesRoom.img = 'ScalesRoom_bowl_taken';
 	
 	game.go(ScalesRoom, false);
-}
+};
 ScalesRoom.take_crown = function() {
 	game.bag.add_item(new Item('Giant Crown'));
 	game.set_flag('scalesDropped');
@@ -669,7 +654,7 @@ ScalesRoom.take_crown = function() {
 	ScalesRoom.img = 'ScalesRoom_crown_taken';
 	
 	game.go(ScalesRoom, false);
-}
+};
 
 //class StatueRoom
 function StatueRoom() {}
@@ -677,19 +662,23 @@ StatueRoom.img = 'StatueRoom';
 StatueRoom.standing = 'bottom';
 StatueRoom.go = function(talk) {
 	if (typeof talk === 'undefined' || talk) {
-		game.output([
+		game.output([// !!! fix this for picture
 			"You walk through the stone archway into the main part of the ground floor.",
 			"Rubble lies around you on the ground.",
 			"You arrive in a large open room.",
 			"It is entirely empty except for a Giant Statue of a man.",
 			"It is surrounded by a large beam of light coming from the ceiling.",
 			"",
-			"Although the statue is kneeling, it still reigns over ten meters tall.",
+			"The statue towers over ten meters in height.",
 			"He is depicted as being bald and wearing a robe down to his feet.",
 			"He stands with one hand by his side and the other outstretched forwards towards the ground with his palm facing upwards.",
 			"This arm appears to have small steps all the way up to his shoulder.",
 		]);
-	}
+	} /*else {
+		game.output([
+			"",
+		]);
+	}*/
 	
 	if (StatueRoom.standing === 'bottom') {
 		game.give_options([
@@ -701,7 +690,7 @@ StatueRoom.go = function(talk) {
 			{text: "Walk down the statue", handler: StatueRoom.walk_down}
 		]);
 	}
-}
+};
 StatueRoom.use_item = function(item) {
 	var itemName = item.get_name();
 	
@@ -743,7 +732,7 @@ StatueRoom.use_item = function(item) {
 	} else {
 		game.output(["It didn't do anything"]);
 	}
-}
+};
 StatueRoom.walk_up = function() {
 	game.output([
 		"You step on the hand and begin to climb the steps up to the top of the statue.",
@@ -752,7 +741,7 @@ StatueRoom.walk_up = function() {
 	StatueRoom.standing = 'top';
 	
 	game.go(StatueRoom, false);
-}
+};
 StatueRoom.walk_down = function() {
 	game.output([
 		"You step on the shoulder and begin to climb the steps down to the bottom of the statue.",
@@ -761,7 +750,7 @@ StatueRoom.walk_down = function() {
 	StatueRoom.standing = 'bottom';
 	
 	game.go(StatueRoom, false);
-}
+};
 
 //class Turret
 function Turret() {}
@@ -807,12 +796,13 @@ Turret.go = function() {
 			{text: "Go back...", handler: game.goFunction(Castle)}
 		]);
 	}
-}
+};
 Turret.throw_rope_over = function() {
 	game.output([
 		"You unhooked the rope from the edge of the stone turret.",
 		"You watched it fall down to the bottom of the castle, somewhere in the forest."
 	]);
+	ForestEdge.img = 'ForestEdge_rope_down';
 	game.set_flag('ropeIsDown');
 	
 	Turret.img = 'Turret_no_rope';
@@ -821,7 +811,7 @@ Turret.throw_rope_over = function() {
 	game.give_options([
 		{text: "Go back...", handler: game.goFunction(Castle)}
 	]);
-}
+};
 Turret.pull_rope_up = function() {
 	game.output(["You tugged at the rope, but it appears to be attached to something at the bottom."]);
-}
+};
