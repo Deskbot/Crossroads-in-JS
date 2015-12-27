@@ -1,0 +1,150 @@
+/* elems */
+* {
+	margin: 0;
+	padding: 0;
+
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+html, body, #game {
+	height: 100%;
+	width: 100%;
+}
+
+html, body {
+	overflow: hidden;
+}
+
+body {
+	background-color: black;
+}
+button {
+	cursor: pointer;
+}
+
+/* useful classes */
+.hidden {
+	visibility: hidden;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+/* game */
+#game {
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: calc(100% - 30px);
+	margin: auto;
+	padding-top: 30px;
+	position: relative;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+}
+
+/* output */
+#output-wrapper {
+	background-color: rgba(0,0,0,0.4);
+	border: 1px solid black;
+	border-radius: 7px;
+	color: white;
+	font-family: consolas;
+	height: 300px;
+	margin: auto;
+	padding: 0 5px 0 13px;
+	width: 55%;
+}
+#output {
+	display: inline-block;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding-right: 5px;
+	text-align: left;
+	width: 100%;
+}
+
+#output p {
+	font-size: 15px;
+	margin: 7.5px 0 7.5px 0;
+	min-height: 18px;
+}
+
+#output hr {
+	border: 1px inset white;
+	margin: 18px 0 18px 0;
+}
+
+/* output scrollbar */
+#output::-webkit-scrollbar {
+	width: 10px;
+}
+#output::-webkit-scrollbar-thumb {
+	background-color: rgba(255,255,255,0.3);
+	border-radius: 7px;
+}
+#output::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(255,255,255,0.7);
+}
+#output::-scrollbar-corner {
+	display: none;
+}
+
+/* panels */
+#panels {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+/* options and items */
+#options-panel, #items-panel {
+	display: inline-block;
+	margin-bottom: 15px;
+	vertical-align: bottom;
+}
+
+#items-panel {
+	bottom: 0;
+	position: absolute;
+	right: 0;
+}
+
+#options-panel button, #items-panel button {
+    background-color: rgba(255,255,255,0.7);
+    border: 1px solid black;
+	border-radius: 4px;
+    font-family: consolas;
+	font-size: 13px;
+	font-weight: bold;
+	margin: 0 15px;
+	outline: none;
+	vertical-align: bottom;
+}
+
+#options-panel button {
+	height: 50px;
+    width: 100px;
+}
+
+#items-panel button {
+	background-size: contain;
+	height: 100px;
+	position: relative;
+	vertical-align: text-bottom;
+	width: 100px;
+}
+
+/* image-loader */
+#image-loader {
+	display: none;
+}
