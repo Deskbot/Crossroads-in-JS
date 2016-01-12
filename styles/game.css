@@ -49,17 +49,6 @@ button {
 	width: 100%;
 }
 
-/* dead filter */
-#dead-filter {
-	background-color: rgba(0,0,0,0);
-	height: 100%;
-	left: 0px;
-	pointer-events: none;
-	position: absolute;
-	top: 0px;
-	width: 100%;
-}
-
 /* output */
 #output-wrapper {
 	background-color: rgba(0,0,0,0.4);
@@ -71,7 +60,6 @@ button {
 	margin: auto;
 	padding: 0 5px 0 13px;
 	width: 55%;
-	z-index: 2;
 }
 #output {
 	display: inline-block;
@@ -116,7 +104,6 @@ button {
 	position: absolute;
 	text-align: center;
 	width: 100%;
-	z-index: 3;
 }
 
 /* options and items */
