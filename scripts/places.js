@@ -146,7 +146,7 @@ Seashore.using_bowl = function(stage) {
 		
 	} else {
 		game.give_options([
-			{text: "paddle...", handler: Seashore.using_bowl_function(stage + 1)}
+			{text: "next", handler: Seashore.using_bowl_function(stage + 1)}
 		]);
 	}
 }
@@ -662,18 +662,23 @@ StatueRoom.img = 'StatueRoom';
 StatueRoom.standing = 'bottom';
 StatueRoom.go = function(talk) {
 	if (typeof talk === 'undefined' || talk) {
-		game.output([
+		game.output([// !!! fix this for picture
 			"You walk through the stone archway into the main part of the ground floor.",
+			"Rubble lies around you on the ground.",
 			"You arrive in a large open room.",
-			"It is entirely empty except for a giant statue of a man.",
+			"It is entirely empty except for a Giant Statue of a man.",
 			"It is surrounded by a large beam of light coming from the ceiling.",
 			"",
-			"The statue towers way above you.",
-			"Is is sat cross-legged, hands held together.",
-			"Some strange steps have been built upon the statue, leading all the way up to his shoulder.",
-			"On his shoulder there is a ladder leading to the top of his head."
+			"The statue towers over ten meters in height.",
+			"He is depicted as being bald and wearing a robe down to his feet.",
+			"He stands with one hand by his side and the other outstretched forwards towards the ground with his palm facing upwards.",
+			"This arm appears to have small steps all the way up to his shoulder.",
 		]);
-	}
+	} /*else {
+		game.output([
+			"",
+		]);
+	}*/
 	
 	if (StatueRoom.standing === 'bottom') {
 		game.give_options([
@@ -690,14 +695,11 @@ StatueRoom.use_item = function(item) {
 	var itemName = item.get_name();
 	
 	if (StatueRoom.standing === 'bottom' && itemName === 'Giant Bowl') {
-		StatueRoom.img = 'StatueRoom_crown';
-		game.change_background(StatueRoom.img);
-		
 		game.output([
 			"You placed the Giant Bowl into the hand of the Giant Statue.",
 			"Immediately the inside of the bowl began to glow.",
 			"You felt your body begin to shake uncontrollably.",
-			"You looked up and see the head of the statue begin to open its eyes.",
+			"You looked up and see the head of the statue begin to turn towards you.",
 			"Your vision starts to blur, but you can see a blue light being drawn from your chest towards the bowl.",
 			"Suddenly your vision went black."
 		]);
@@ -705,17 +707,18 @@ StatueRoom.use_item = function(item) {
 		game.kill_player();
 		
 	} else if (StatueRoom.standing === 'top' && itemName === 'Giant Crown') {
-		StatueRoom.img = 'StatueRoom_bowl';
-		game.change_background(StatueRoom.img);
-		
 		game.output([
 			"You placed the Giant Crown on top of the head of the Giant Statue.",
 			"The crown began to glow.",
 			"",
 			"Suddenly the stone beneath you begins to shake",
-			"You run back down the steps as the Giant Statue begins to shudder.",
+			"You run back down the steps as the Giant Statue begins to stand up.",
 			"\"You...\", a deep voice called out.",
 			"\"This artefact will only sustain me temporarily. I need something more.\"",
+			"",
+			"",
+			"",
+			"",
 			"",
 			"\"Your sacrifice to break my imprisonment will be much appreciated.\"",
 			"",
@@ -732,8 +735,8 @@ StatueRoom.use_item = function(item) {
 };
 StatueRoom.walk_up = function() {
 	game.output([
-		"You step on the hand and begin to climb up to the top of the statue.",
-		"You reach the top of the ladder and you are standing on the head of the man."
+		"You step on the hand and begin to climb the steps up to the top of the statue.",
+		"You reach the top of the steps and you are standing on the shoulder of the man."
 	]);
 	StatueRoom.standing = 'top';
 	
@@ -741,8 +744,8 @@ StatueRoom.walk_up = function() {
 };
 StatueRoom.walk_down = function() {
 	game.output([
-		"You come down from the ladder and begin to walk the steps back down to the bottom of the statue.",
-		"You reach the bottom and now you are standing at the base of the statue."
+		"You step on the shoulder and begin to climb the steps down to the bottom of the statue.",
+		"You reach the bottom of the steps and you are standing at the base of the statue."
 	]);
 	StatueRoom.standing = 'bottom';
 	
