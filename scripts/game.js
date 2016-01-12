@@ -95,30 +95,49 @@ Controller.prototype.new_option = function(text, handler) {
 	optionsPanelElem.append('<button>' + text + '</button>');
 	var numOfButtons = optionsPanelElem.children('button').length;
 	$(optionsPanelElem.children('button')[numOfButtons-1]).click(handler);
-}
+};
 Controller.prototype.clear_output = function() {
 	outputElem.empty();
 	//outputElem.children(':not(.ui-resizable-handle)').remove();
-}
+};
 Controller.prototype.use_item = function(item) {
 	if (typeof this.currentLocation.use_item === 'function') {
 		this.currentLocation.use_item(item);
 	} else {
 		game.output(["It didn't do anything"]);
 	}
-}
+};
 Controller.prototype.kill_player = function() {
 	this.output(['You are dead.']);
 	
 	itemsPanelElem.addClass('hidden');
 	
-	game.remove_background();
+	this.decompose();
+	
 	game.give_options([{text: "Try Again", handler: restart}]);
-}
+};
+Controller.prototype.decompose = function() {
+	var deadFilter = $('#dead-filter');
+	this.filterAlpha = 0;
+	
+	this.interval = setInterval(function(){
+		this.decompose_slightly(deadFilter)
+	}.bind(this), 50);
+};
+Controller.prototype.decompose_slightly = function(filter) {
+	if (this.filterAlpha == 1) {
+		clearInterval(this.interval);
+	} else {
+		var bgcStr = 'rgba(0,0,0,' + this.filterAlpha + ')';
+		filter.css('background-color', bgcStr);
+	}
+	
+	this.filterAlpha += 0.01
+};
 Controller.prototype.win = function() {
 	optionsPanelElem.addClass('hidden');
 	itemsPanelElem.addClass('hidden');
-}
+};
 
 //class Bag
 function Bag() {}
