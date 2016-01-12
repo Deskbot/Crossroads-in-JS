@@ -116,7 +116,7 @@ Seashore.using_bowl = function(stage) {
 		]);
 		
 	} else if (stage == 1) {
-		game.bag.remove_item(game.bag.get_item('Rope'));
+		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
 		
 		game.change_background('Ocean');
 		
@@ -251,7 +251,7 @@ TreeBase.use_item = function(item) {
 			
 			game.kill_player();
 		}
-	} else */if (!game.flags.ropeOnTree && itemName == 'Rope') {
+	} else */if (!game.flags.ropeOnTree && itemName == 'Harpoon Rope') {
 		ForestEnd.img = 'ForestEnd_rope';
 		TreeBase.img = 'TreeBase_rope';
 		game.change_background(TreeBase.img);
@@ -263,7 +263,7 @@ TreeBase.use_item = function(item) {
 			"The rope became taught and held on tightly."
 		]);
 		
-		game.bag.remove_item(game.bag.get_item('Rope'));
+		game.bag.remove_item(game.bag.get_item('Harpoon Rope'));
 		
 		game.go(TreeBase, false);
 	
@@ -516,7 +516,7 @@ ForestEdge.pull_rope = function() {
 	]);
 };
 ForestEdge.take_rope = function() {
-	game.bag.add_item(new Item('Rope'));
+	game.bag.add_item(new Item('Harpoon Rope'));
 	ForestEdge.img = 'ForestEdge_rope_taken';
 	game.change_background(ForestEdge.img);
 	game.set_flag('gotRope');
