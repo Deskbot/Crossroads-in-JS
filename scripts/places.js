@@ -443,6 +443,7 @@ ForestEnd.jump_successfully = function() {
 	]);
 	
 	game.set_flag('deadBear');
+	TreeBase.img = 'TreeBase_deadbear';
 	
 	game.go(TreeBase, false);
 };
