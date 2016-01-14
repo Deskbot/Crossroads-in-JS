@@ -273,14 +273,14 @@ TreeBase.use_item = function(item) {
 }
 TreeBase.climb_rope = function() {
 	game.output([
+		"",
 		"You place both hands firmly around the Rope and begin to pull yourself up.",
 		"Your feet leave the ground, and you look ready to move your hands higher.",
-		"",
 		"*creak*",
-		"",
 		"You continue looking upwards as the trunk of the tree above bends towards you.",
+		
 		"*snap*",
-		"",
+		
 		"Immediately the trunk comes crashing down, knocking you hard in the face along the way.",
 		"It pushes you down towards the ground and crushes your skull at the bottom."
 	]);
@@ -382,7 +382,7 @@ Clearing.go = function() {
 			{text: "Go back...", handler: game.goFunction(Forest)}
 		]);
 	}	
-}
+};
 Clearing.take_stick = function() {
 	game.set_flag('sharpStick');
 
@@ -395,7 +395,7 @@ Clearing.take_stick = function() {
 	game.give_options([
 		{text: "Go back...", handler: game.goFunction(Forest)}
 	]);
-}
+};
 
 //class ForestEnd
 function ForestEnd() {}
@@ -425,6 +425,7 @@ ForestEnd.go = function() {
 }
 ForestEnd.jump_successfully = function() {
 	game.output([
+		"",
 		"You take this opportunity to jump, grabbing the rope in the air, hoping with all your might that the tree will hold and you will survive.",
 		"",
 		"You swing through the air, your legs holding on tightly, but suddenly the branch begins to give way.",
@@ -443,12 +444,14 @@ ForestEnd.jump_successfully = function() {
 	]);
 	
 	game.set_flag('deadBear');
+	Forest.img = 'Forest_empty';
 	TreeBase.img = 'TreeBase_deadbear';
 	
 	game.go(TreeBase, false);
 };
 ForestEnd.get_killed_by_bear = function() {
 	game.output([
+		"",
 		"In that moment of hesitation, the bear struck, its teeth crushing hard into your shoulder.",
 		"It swings you onto the floor.",
 		"Your head hits forcefully against the ground.",
@@ -500,10 +503,11 @@ ForestEdge.go = function() {
 };
 ForestEdge.climb_rope = function() {
 	game.output([
-		"You placed both hands around the rope and begin to pull yourself up.",
-		"You hold on with your legs and keep raising your hands higher before your arms have the chance to ache too much.",
 		"",
-		"However all the pulling and swinging you do on the rope begins to loosen it from the top",
+		"You placed both hands around the rope and begin to pull yourself up.",
+		"You hold on with your legs and persistently pull yourself up higher and higher before your arms have a chance to ache.",
+		"",
+		"However all the pulling and swinging you do on the rope begins to loosen it from the top.",
 		"Suddenly the rope gives way and becomes detached from the tower.",
 		"",
 		"You fall through the air to the ground."
@@ -513,6 +517,7 @@ ForestEdge.climb_rope = function() {
 };
 ForestEdge.pull_rope = function() {
 	game.output([
+		"",
 		"You tugged at the rope to try to get it to move, however the rope is held on tightly enough that you can't pull it down."
 	]);
 };
@@ -636,6 +641,7 @@ ScalesRoom.take_bowl = function() {
 	game.bag.add_item(new Item('Giant Bowl'));
 	game.set_flag('scalesDropped');
 	game.output([
+		"",
 		"The moment you took the bowl from the scales, on the other side of the room the crown immediately fell.",
 		"You watched it fall and you waited, but there was no sound of it hitting the ground."
 	]);
@@ -648,6 +654,7 @@ ScalesRoom.take_crown = function() {
 	game.bag.add_item(new Item('Giant Crown'));
 	game.set_flag('scalesDropped');
 	game.output([
+		"",
 		"The moment you took the bowl from the scales, on the other side of the room the crown immediately fell.",
 		"You watched it fall and you waited, but there was no sound of it hitting the ground."
 	]);
@@ -691,7 +698,7 @@ StatueRoom.use_item = function(item) {
 	var itemName = item.get_name();
 	
 	if (StatueRoom.standing === 'bottom' && itemName === 'Giant Bowl') {
-		StatueRoom.img = 'StatueRoom_crown';
+		StatueRoom.img = 'StatueRoom_bowl';
 		game.change_background(StatueRoom.img);
 		
 		game.output([
@@ -706,7 +713,7 @@ StatueRoom.use_item = function(item) {
 		game.kill_player();
 		
 	} else if (StatueRoom.standing === 'top' && itemName === 'Giant Crown') {
-		StatueRoom.img = 'StatueRoom_bowl';
+		StatueRoom.img = 'StatueRoom_crown';
 		game.change_background(StatueRoom.img);
 		
 		game.output([
@@ -733,6 +740,7 @@ StatueRoom.use_item = function(item) {
 };
 StatueRoom.walk_up = function() {
 	game.output([
+		"",
 		"You step on the hand and begin to climb up to the top of the statue.",
 		"You reach the top of the ladder and you are standing on the head of the man."
 	]);
@@ -742,6 +750,7 @@ StatueRoom.walk_up = function() {
 };
 StatueRoom.walk_down = function() {
 	game.output([
+		"",
 		"You come down from the ladder and begin to walk the steps back down to the bottom of the statue.",
 		"You reach the bottom and now you are standing at the base of the statue."
 	]);
@@ -797,6 +806,7 @@ Turret.go = function() {
 };
 Turret.throw_rope_over = function() {
 	game.output([
+		"",
 		"You unhooked the rope from the edge of the stone turret.",
 		"You watched it fall down to the bottom of the castle, somewhere in the forest."
 	]);
