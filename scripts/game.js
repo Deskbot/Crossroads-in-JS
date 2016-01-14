@@ -101,6 +101,11 @@ Controller.prototype.clear_output = function() {
 	//outputElem.children(':not(.ui-resizable-handle)').remove();
 };
 Controller.prototype.use_item = function(item) {
+	game.output([
+		"",
+		"> " + item.get_name()
+	]);
+	
 	if (typeof this.currentLocation.use_item === 'function') {
 		this.currentLocation.use_item(item);
 	} else {
