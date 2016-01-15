@@ -330,10 +330,7 @@ Forest.use_item = function(item) {
 			"You put the end of the stick into the ground and hide behind a tree.",
 			"The bear begins to smell the fresh fish and walks towards it slowly.",
 			"",
-			"It begins chewing on the fish.",
-			"In that moment while it's distracted, you run past it fast as you can.",
-			"",
-			"You slow down momentarily to pick up the shiny object."
+			"It begins chewing on the fish, distracted away from you."
 		]);
 		
 		game.bag.remove_item(item);
@@ -401,6 +398,8 @@ Clearing.take_stick = function() {
 function ForestEnd() {}
 ForestEnd.img = 'ForestEnd';
 ForestEnd.go = function() {
+	game.output(["You slow down momentarily to pick up the shiny object."]);
+	
 	if (game.flags.ropeOnTree) {
 		game.output([
 			"You continue running and see the strange looking tree from before, with the Rope hanging down."
