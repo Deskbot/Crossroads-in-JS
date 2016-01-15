@@ -15,7 +15,7 @@ Globe.go = function() {
 	game.output([
 		"The left path leads towards a river.",
 		"The right path leads towards a castle.",
-		"And the middle paths leads towards a forest."
+		"And the middle path leads towards a forest."
 	]);
 	
 	game.give_options([
