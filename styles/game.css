@@ -1,3 +1,8 @@
+@font-face {
+	font-family: Consolas;
+	src: url('Consolas.ttf');
+}
+
 /* elems */
 * {
 	margin: 0;
@@ -66,7 +71,7 @@ button {
 	border: 1px solid black;
 	border-radius: 7px;
 	color: white;
-	font-family: consolas;
+	font-family: Consolas;
 	height: 300px;
 	margin: auto;
 	padding: 0 5px 0 13px;
