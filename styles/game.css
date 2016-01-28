@@ -7,12 +7,18 @@
 * {
 	margin: 0;
 	padding: 0;
+}
 
-	-webkit-user-select: none;
+html {
+    -webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+body {
+	background-color: black;
 }
 
 html, body, #game {
@@ -24,9 +30,6 @@ html, body {
 	overflow: hidden;
 }
 
-body {
-	background-color: black;
-}
 button {
 	cursor: pointer;
 }
@@ -35,7 +38,6 @@ button {
 .hidden {
 	visibility: hidden;
 }
-
 .clickable {
 	cursor: pointer;
 }
@@ -86,6 +88,9 @@ button {
 	padding-right: 5px;
 	text-align: left;
 	width: 100%;
+}
+#output .no-scrollbar {
+    overflow-y: hidden;
 }
 
 #output p {

@@ -12,7 +12,7 @@ function init() {
 	game = new Controller();
 	game.clear_output();
 	game.go(Globe);
-
+    
 	$('#output-wrapper').draggable().resizable();
 }
 
