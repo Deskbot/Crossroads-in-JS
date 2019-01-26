@@ -73,7 +73,7 @@ button {
 	border: 1px solid black;
 	border-radius: 7px;
 	color: white;
-	font-family: Consolas;
+	font-family: Consolas, monospace;
 	height: 300px;
 	margin: auto;
 	padding: 0 5px 0 13px;
